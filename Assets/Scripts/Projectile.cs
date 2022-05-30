@@ -29,6 +29,11 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         _speed = 0;
+        if(collision.gameObject.tag == "Soul")
+        {
+            LostSoulController soul =collision.gameObject.GetComponent<LostSoulController>();
+            soul.GetCaught();
+        }
         Destroy(gameObject);
     }
 }

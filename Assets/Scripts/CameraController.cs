@@ -1,39 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] 
-    private Transform _target;
+    [SerializeField]
+    private float sensitivity = 1f;
 
-    public float rotSpeed = 1.5f;
-
-    private float _rotY;
-    private Vector3 _offset;
-
+    private CinemachineComposer composer;
     // Start is called before the first frame update
     void Start()
     {
-        _rotY = transform.eulerAngles.y;
-        _offset = _target.position - transform.position;
+        composer = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineComposer>();
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        float horInput = Input.GetAxis("Horizontal");
-        if (horInput != 0)
-        {
-            _rotY += horInput * rotSpeed;
-        }
-        else
-        {
-            _rotY += Input.GetAxis("Mouse X") * rotSpeed * 3;
-        }
+        //float vertical = Input.GetAxis("Mouse Y") * sensitivity;
+        //composer.m_TrackedObjectOffset.y += vertical;
+        //composer.m_TrackedObjectOffset.y = Mathf.Clamp(composer.m_TrackedObjectOffset.y, -10, 10);
 
-        Quaternion rotation = Quaternion.Euler(0, _rotY, 0);
-        transform.position = _target.position - (rotation * _offset);
-        transform.LookAt(_target);
     }
 }

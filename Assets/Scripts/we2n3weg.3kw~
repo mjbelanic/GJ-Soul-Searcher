@@ -1,0 +1,92 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LostSoulController : MonoBehaviour
+{
+    [SerializeField]
+    private float soulSpeed;
+    [SerializeField]
+    private Collider soulCollider;
+    [SerializeField]
+    private Collider eyeCollider;
+    [SerializeField]
+    private float safeDistance;
+    [SerializeField]
+    private Transform[] travelPoints;
+    [SerializeField]
+    private bool beingChased;
+    [SerializeField]
+    private bool caught;
+    [SerializeField]
+    private bool isSafeDistance;
+    [SerializeField]
+    private float timeToEscape;
+
+
+    private float _remainingTime;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        _remainingTime = timeToEscape;
+    }
+
+    // Update is called once per frame (May need to be fixed update)
+    void Update()
+    {
+        if (caught)
+        {
+            // Countdown time to escape
+            _remainingTime -= Time.deltaTime;
+            if(_remainingTime < 0)
+            {
+                Escape();
+            }
+
+        }
+        else
+        {
+            if (beingChased)
+            {
+                if (isSafeDistance)
+                {
+                    // Stop and return moving to the next point
+                }
+                else
+                {
+                    // Keep avoiding player
+                }
+            }
+        }
+    }
+
+    void MoveToNextPoint()
+    {
+        // Get current point
+        // Get next point
+        // move to next point
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // check that object that hit soul was a projectile
+        // if it was and ghost is not captured, put in capture state
+        // else do nothing (maybe reset counter?)
+        // chack the object was player
+        // if it was and the soul is captured, run capture function
+        // else do nothing
+    }
+
+
+    void Captured()
+    {
+        Destroy(gameObject);
+    }
+
+    void Escape()
+    {
+        // Animation stuff (Ghost going from bag to running
+        _remainingTime = timeToEscape;
+    }
+}
